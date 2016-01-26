@@ -1,0 +1,10 @@
+ansible==1.9.3
+Django==1.9.1
+ecdsa==0.13
+Jinja2==2.8
+MarkupSafe==0.23
+paramiko==1.16.0
+psycopg2==2.6.1
+pycrypto==2.6.1
+PyYAML==3.11
+wheel==0.26.0
