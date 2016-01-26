@@ -1,0 +1,37 @@
+---
+
+- hosts: all
+  vars:
+    ansible_ssh_user: root
+  tasks:
+
+    - name: create provisioning group
+      group:
+        name=ansible
+        state=present
+        system=yes
+
+    - name: create provisioning user
+      user:
+        name=ansible
+        createhome=yes
+        system=yes
+        state=present
+        group=ansible
+        shell=/bin/bash
+
+    - name: setup sudo-less password for ansible-user
+      copy:
+        content='ansible ALL=(ALL) NOPASSWD:ALL'
+        dest=/etc/sudoers.d/ansible
+        owner=root
+        group=root
+        mode=0440
+
+    - name: ansible authorized keys
+      authorized_key:
+        user=ansible
+        key={{ item }}
+      with_items: ansible_authorized_keys
+
+    # You might also need to create specific user accounts

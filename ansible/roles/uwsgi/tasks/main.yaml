@@ -1,0 +1,37 @@
+---
+
+- name: install dependencies
+  apt:
+    pkg={{ item }}
+    state=installed
+  with_items:
+    - build-essential
+    - python-dev
+
+- name: install uwsgi
+  pip:
+    name=uwsgi
+    state=present
+
+- name: create the config directory
+  file:
+    path=/etc/uwsgi
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: create the update script
+  template:
+    src=etc/init/uwsgi.conf
+    dest=/etc/init/uwsgi.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart uwsgi
+
+- name: start uwsgi
+  service:
+    name=uwsgi
+    state=started
+    enabled=yes

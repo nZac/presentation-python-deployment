@@ -1,0 +1,18 @@
+---
+
+users:
+  nzaccardi:
+    name: nzaccardi
+    key: |
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCynpHN5cHyyd76JlxB5AL8t5IQckmjfXIbkQWO4mriAfsbxEY9H4D5wEPvA1bsBRt+U9OkpOeUAa06yPn7qy5M5uHQsnqGSt2EkVv4xGqLrIoBZIiInQN8+kblujrOZNikghLJx9tfBXTrWGXBPmaYzAjBbC8feEq3oVbn7GEmECz7g9EDaEoY/roO2eNqamlEgUTsF+Gk0df4zSYTNcQiBkdVS6+UK+0IxFytw1qZJfYn8w05k40YKiF8ElUkuhqtpnZHC/8yJeg22gJOSOBTMhHNF9VWUDg9YqX4ASXEzMSKpUfXvjjZeU6DRHgWpkuaL4amSx5LCWOAKCS+z+UXDHBMMaEBOjCnt6soov8Ef2NVMUMz2ikWyeiDYwZdhrOiOkPkxX3cbE7dh9BTHVpMixJ5xRVIIQPwcKVdnpIWsGwjOJ0AbZj0YXs5pdz3ZZ6ToT8Dd8rHJsTDXry/HlnFGuOdu+PFwj17aE149qMIFnJoT9Sr4p7Z5gk+DjGMdw0Yy9IpJaEO98XAZi3jfx7Y6KvHKpv6eBUi8DVyfTShYEv8ve9lU5t5mj5xlVi2L9T913AJ4oSTXtKrg7T7stDDxg4dsGC2zNdbWqH8zsz8SGLJ5ZTnAU52A5gPgvUrMShoJI6gDHmuehJNK3PV1u+I6XmKUGuVP5fktfs8v9Vx/w== Personal Mac Book"
+    password: "$6$rounds=656000$9o5HQYC.Yyef1HbM$miGxIWFhn1WV2kEStJVgNebKaCnAYey7d2sGZeo.7bhjSk1iR.gcrLH0D8nQDFWtZHOVM.NrYR4yzQS7eXvNf0"
+    groups: ''
+
+
+ansible_authorized_keys:
+  - "{{ users.nzaccardi.key }}"
+
+
+sysadmins:
+  - "{{ users.nzaccardi }}"
+

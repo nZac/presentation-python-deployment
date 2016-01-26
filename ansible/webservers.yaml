@@ -1,0 +1,6 @@
+---
+
+- hosts: webservers
+  roles:
+    - { role: nginx, tags: nginx}
+    - { role: uwsgi, tags: uwsgi}

@@ -1,0 +1,16 @@
+---
+
+- name: install deadsnakes
+  apt_repository:
+    repo='ppa:fkrull/deadsnakes-python2.7'
+    update_cache=yes
+
+- name: install updated python
+  apt:
+    pkg="python2.7"
+    state=latest
+
+- name: install pip
+  apt:
+    pkg=python-pip
+    state=installed
