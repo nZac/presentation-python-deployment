@@ -1,0 +1,5 @@
+[uwsgi]
+threads=20
+user=%n-app
+socket = 127.0.0.1:8080
+wsgi-file = /home/%n/wsgi/load-app.wsgi

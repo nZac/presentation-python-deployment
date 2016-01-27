@@ -1,0 +1,15 @@
+---
+
+- fail: python_app_op must be set to a proper value
+  when: python_app_op not in _python_app_options
+
+- fail: python_app_name must be set to a string
+  when: python_app_name == False
+
+- fail: pythong_app_name must be a string
+  when: python_app_name == False
+
+- fail: pythong_app_dpath must be a string
+  when: python_app_dpath == False
+
+- include: "{{ python_app_op }}.yaml"

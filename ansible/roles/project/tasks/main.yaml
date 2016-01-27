@@ -1,0 +1,9 @@
+---
+
+- fail: project_op must be set to a proper value
+  when: project_op not in _project_options
+
+- fail: project_name must be set to a string
+  when: project_name == False
+
+- include: "{{ project_op }}.yaml"

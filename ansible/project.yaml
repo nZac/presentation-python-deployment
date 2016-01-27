@@ -1,0 +1,9 @@
+---
+
+- hosts: webservers
+  roles:
+    - role: project
+      tags: project
+      project_name: deployme
+      project_op: provision
+

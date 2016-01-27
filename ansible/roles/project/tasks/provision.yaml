@@ -1,0 +1,67 @@
+---
+
+
+- name: create a group for the project
+  group:
+    name={{ project_group }}
+    state=present
+
+- name: create the project user
+  user:
+    name={{ project_user }}
+    createhome=yes
+    home={{ project_user_home_dpath }}
+    group={{ project_group }}
+    shell=/bin/bash
+    state=present
+
+- name: manage the mode on the home directory
+  file:
+    path={{ project_user_home_dpath }}
+    state=directory
+    group={{ project_group }}
+    owner={{ project_user }}
+    mode=0750
+
+- name: change umask in .profile
+  lineinfile:
+    line="umask u=rwx,g=rx,o="
+    dest={{project_user_home_dpath}}/.profile
+    state=present
+    insertafter=EOF
+  tags: umask
+
+- name: add keys for project
+  authorized_key:
+    user={{ project_user }}
+    key={{ item }}
+  with_items: project_authorized_keys
+
+- name: create app user
+  user:
+    name={{ project_app_user }}
+    createhome=yes
+    home={{ project_app_user_home_dpath }}
+    state=present
+    group={{ project_group }}
+    shell=/bin/bash
+
+- name: change app user's umask in .profile
+  lineinfile:
+    line="umask u=rwx,g=rwx,o="
+    dest={{project_app_user_home_dpath}}/.profile
+    state=present
+    insertafter=EOF
+  tags: umask
+
+- name: add keys for app user
+  authorized_key:
+    user={{ project_app_user }}
+    key={{ item }}
+  with_items: project_authorized_keys
+
+- name: put www-data into group directory
+  user:
+    name=www-data
+    append=yes
+    groups={{ project_group }}

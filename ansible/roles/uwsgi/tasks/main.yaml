@@ -21,6 +21,11 @@
     group=root
     mode=0755
 
+- name: copy skeleton file over
+  template:
+    src=etc/uwsgi/config.skel
+    dest=/etc/uwsgi/config.skel
+
 - name: create the update script
   template:
     src=etc/init/uwsgi.conf

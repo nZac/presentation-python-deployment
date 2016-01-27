@@ -1,0 +1,22 @@
+---
+
+_project_options:
+  - noop
+  - provision
+  - deploy
+
+project_op: noop
+
+project_name: False
+
+project_user: "{{ project_name }}"
+project_group: "{{ project_user }}"
+project_user_home_dpath: "/home/{{ project_user }}"
+
+project_app_user: "{{ project_user }}_app"
+project_app_user_home_dpath: "/home/{{ project_app_user }}"
+
+
+project_authorized_keys:
+  - "{{ users.nzaccardi.key }}"
+

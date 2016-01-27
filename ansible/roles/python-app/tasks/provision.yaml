@@ -1,0 +1,80 @@
+---
+
+- name: create application directories
+  file:
+    path={{ item }}
+    state=directory
+    owner={{project_user}}
+    group={{project_group}}
+    mode=750
+  with_items:
+    - "{{ python_app_virtualenv_dpath }}/bin"
+    - "{{ python_app_source_dpath }}"
+    - "{{ python_app_log_dpath }}"
+
+- name: link venv/bin to ~/bin
+  file:
+    src={{ python_app_virtualenv_dpath }}/bin
+    dest={{ python_app_dpath }}/bin
+    owner={{project_user}}
+    group={{project_group}}
+    state=link
+
+- name: link venv/bin to app user's ~/bin
+  file:
+    src={{ python_app_virtualenv_dpath }}/bin
+    dest={{ project_app_user_home_dpath }}/bin
+    owner={{project_app_user}}
+    group={{project_group}}
+    state=link
+
+- name: manage nginx accessible directories
+  file:
+    path={{ item }}
+    state=directory
+    owner={{project_user}}
+    group={{project_group}}
+    mode=755
+  with_items:
+    - "{{ python_app_wsgi_dpath }}"
+    - "{{ python_app_static_dpath }}"
+
+- name: manage writeable directory
+  file:
+    path={{ python_app_writeable_dpath }}
+    state=directory
+    owner={{project_user}}
+    group={{project_group}}
+    mode=770
+
+# install load-app.wsgi if it doesn't exist
+- name: Check if load-app.wsgi exists
+  stat:
+    path={{ python_app_wsgi_dpath }}/load-app.wsgi
+  register: check_wsgi_path
+
+- name: create default load-app.wsgi
+  template:
+    src=load-app.wsgi
+    dest={{ python_app_wsgi_dpath }}/load-app.wsgi
+    owner={{project_user}}
+    group={{project_group}}
+    mode=640
+  when: check_wsgi_path.stat.exists == false
+
+- name: symlink the uwsgi config file
+  file:
+    state=link
+    src=/etc/uwsgi/config.skel
+    dest=/etc/uwsgi/{{ python_app_name }}.ini
+    notify:
+      - nginx restart
+      - uwsgi restart
+
+
+- name: symlink the nginx config file
+  file:
+    state=link
+    src=/etc/nginx/sites-available/uwsgi.conf
+    dest=/etc/nginx/sites-enabled/{{ python_app_name }}
+

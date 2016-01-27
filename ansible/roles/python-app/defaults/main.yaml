@@ -1,0 +1,18 @@
+---
+
+_python_app_options:
+  - noop
+  - provision
+  - deploy
+
+python_app_op: noop
+
+python_app_name: "{{ project_name|default(False) }}"
+python_app_dpath: "{{ project_user_home_dpath|default(False) }}"
+
+python_app_virtualenv_dpath: "{{ python_app_dpath }}/venv"
+python_app_source_dpath: "{{ python_app_dpath }}/src"
+python_app_log_dpath: "{{ python_app_dpath }}/log"
+python_app_wsgi_dpath: "{{ python_app_dpath }}/wsgi"
+python_app_static_dpath: "{{ python_app_dpath }}/static"
+python_app_writeable_dpath: "{{ python_app_dpath }}/writeable"

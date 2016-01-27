@@ -18,6 +18,21 @@
     mode=644
   notify: restart nginx
 
+- name: remove the default config file
+  file:
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx
+
+- name: Create a config file
+  template:
+    src=etc/nginx/sites-available/uwsgi.conf
+    dest=/etc/nginx/sites-available/uwsgi.conf
+    owner=root
+    group=root
+    mode=644
+  notify: restart nginx
+
 - name: start nginx
   service:
     name=nginx

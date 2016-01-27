@@ -1,0 +1,5 @@
+---
+
+dependencies:
+  - role: project
+    project_op: noop

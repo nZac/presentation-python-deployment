@@ -1,0 +1,9 @@
+---
+
+- hosts: webservers
+  vars_files:
+    - vars/project.yaml
+  roles:
+    - role: python-app
+      tags: python-app
+      python_app_op: provision
